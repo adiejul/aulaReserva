@@ -17,6 +17,8 @@ runs:
   steps:
     - id: comprobar
       shell: bash
+      env:
+        RUTAS: ${{ inputs.rutas }}
       run: |
         total=0
         for ruta in $RUTAS; do

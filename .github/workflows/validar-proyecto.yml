@@ -15,7 +15,7 @@ jobs:
         id: validacion
         uses: ./.github/actions/validar-aulaReserva
         with:
-          rutas: frontend/index.html frontend/app.js backend/public/index.php
+          rutas: frontend/no-existe.html frontend/app.js backend/public/index.php
           
       - name: Mostrar total de rutas verificadas
         run: echo "Rutas verificadas ${{ steps.validacion.outputs.total }}"

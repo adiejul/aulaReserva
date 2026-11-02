@@ -26,7 +26,7 @@ runs:
             echo "Existe: $ruta"
             total=$((total + 1))
           else
-            echo "::error::No existe la ruta: $ruta"
+            echo "ERROR: No existe la ruta: $ruta"
             exit 1
           fi
         done

@@ -10,7 +10,11 @@ function getAulas(url, muestraAulas){
 
 function muestraAulas(aulas){
     document.getElementById("listadoAulas").innerHTML = aulas
-    .map(aula =>` <div class="recuadros"> Nombre aula: ${aula.nombre} Capacidad: ${aula.capacidad}</div>`)
+    .map(aula =>`
+      <div class="recuadros"> 
+      <h3>${aula.nombre}</h3>
+      <p>Capacidad: ${aula.capacidad} personas </p>
+      </div>`)
     .join("")
 }
 

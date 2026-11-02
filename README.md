@@ -1,0 +1,1 @@
+aulaReservas va a ser una aplicacion donde se van a poder gestionar y consultar las reservas de las aulas.

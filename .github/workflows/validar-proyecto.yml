@@ -1,0 +1,21 @@
+name: Validar proyecto
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: usar Action para comprobar las rutas
+        id: validacion
+        uses: ./.github/actions/validar-aulaReserva
+        with:
+          rutas: frontend/index.html frontend/app.js backend/public/index.php
+          
+      - name: Mostrar total de rutas verificadas
+        run: echo "Rutas verificadas ${{ steps.validacion.outputs.total }}"

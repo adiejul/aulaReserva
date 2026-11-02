@@ -13,7 +13,7 @@ jobs:
 
       - name: usar Action para comprobar las rutas
         id: validacion
-        uses: ./.github/actions/validar-aulareserva
+        uses: ./.github/actions/validar-aulaReserva
         with:
           rutas: frontend/index.html frontend/app.js backend/public/index.php
           

@@ -6,7 +6,7 @@ $aulas =[
     [
         "id" => 1,
         "nombre" => "Aula de Informática",
-        "capacidad" => 30
+        "capacidad" => 30,
     ],
     [
         "id" => 2,

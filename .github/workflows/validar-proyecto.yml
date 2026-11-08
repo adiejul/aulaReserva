@@ -10,18 +10,49 @@ on:
       - develop
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: revisar-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  validar:
+  frontend:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v7
 
-      - name: usar Action para comprobar las rutas
-        id: validacion
+      - name: Comprobar archivos frontend
         uses: ./.github/actions/validar-aulaReserva
         with:
-          rutas: frontend/index.html frontend/app.js backend/public/index.php
-          
-      - name: Mostrar total de rutas verificadas
-        run: echo "Rutas verificadas ${{ steps.validacion.outputs.total }}"
+          rutas: |
+            frontend/index.html
+            frontend/app.js
+
+      - name: Comprobar sintaxis JavaScript
+        run: node --check frontend/app.js
+
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Comprobar archivos backend
+        uses: ./.github/actions/validar-aulaReserva
+        with:
+          rutas: |
+            backend/public/index.php
+            backend/public/reservas.php
+
+      - name: Comprobar sintaxis PHP
+        run: |
+          php -l backend/public/index.php
+          php -l backend/public/reservas.php
+
+  resultado:
+    needs: [frontend, backend]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Frontend y backend correctos"

@@ -27,5 +27,5 @@ if (empty($datos['aula']) || empty($datos['fecha']) ||
 }
 
 // Todo correcto
-http_response_code(201);
+http_response_code(201)
 echo json_encode(['mensaje' => 'Reserva recibida correctamente']);

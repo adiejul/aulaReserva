@@ -4,8 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      develop
-      'feature/**'
+      - feature/artefactos
 
 permissions:
   contents: read

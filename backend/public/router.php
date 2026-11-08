@@ -9,6 +9,10 @@ if (str_starts_with($ruta, '/api/')) {
 }
 
 // 2. Lo demás son archivos del frontend
+// /assets/archivo se sirve desde frontend/archivo
+if (str_starts_with($ruta, '/assets/')) {
+    $ruta = substr($ruta, 7);
+}
 $frontend = realpath(__DIR__ . '/../../frontend');
 $archivo = realpath($frontend . ($ruta === '/' ? '/index.html' : $ruta));
 

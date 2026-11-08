@@ -2,6 +2,10 @@ name: 05 - Entrega colaborativa AulaReserva
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      develop
+      'feature/**'
 
 permissions:
   contents: read

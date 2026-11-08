@@ -26,7 +26,7 @@ jobs:
 
       - name: Comprobar archivos frontend
         uses: ./.github/actions/validar-aulaReserva
-        rutas: |
+        rutas: 
             frontend/index.html
             frontend/app.js
 

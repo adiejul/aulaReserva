@@ -26,7 +26,8 @@ jobs:
 
       - name: Comprobar archivos frontend
         uses: ./.github/actions/validar-aulaReserva
-        rutas: 
+        with:
+          rutas: |
             frontend/index.html
             frontend/app.js
 
@@ -39,7 +40,7 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Comprobar archivos backend
-        uses: ./.github/actions/validar-aulareserva
+        uses: ./.github/actions/validar-aulaReserva
         with:
           rutas: |
             backend/public/index.php

@@ -1,0 +1,64 @@
+name: 05 - Entrega colaborativa AulaReserva
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/artefactos
+
+permissions:
+  contents: read
+
+jobs:
+  empaquetar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Crear dist y copiar la aplicación
+        run: |
+          mkdir -p dist
+          cp -r frontend backend database dist/
+
+      - name: Crear version.txt
+        run: |
+          echo "Proyecto: AulaReserva" > dist/version.txt
+          echo "Rama: $GITHUB_REF_NAME" >> dist/version.txt
+          echo "Commit: $GITHUB_SHA" >> dist/version.txt
+          echo "Ejecución: $GITHUB_RUN_NUMBER" >> dist/version.txt
+
+      - name: Subir la entrega
+        uses: actions/upload-artifact@v4
+        with:
+          name: AulaReserva-${{ github.run_number }}
+          path: dist/
+          if-no-files-found: error
+
+  comprobar:
+    needs: empaquetar
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descarga la entrega
+        uses: actions/download-artifact@v4
+        with:
+          name: AulaReserva-${{ github.run_number }}
+          path: entrega/
+      - name: Comprobar archivos de la entrega
+        run: |
+          for archivo in \
+            entrega/frontend/index.html \
+            entrega/backend/public/index.php \
+            entrega/database/schema.sql \
+            entrega/version.txt
+          do
+            if [ -f "$archivo" ]; then
+              echo "OK: $archivo"
+            else
+              echo "::error::Falta $archivo"
+              exit 1
+            fi
+          done
+
+      - name: Mostrar version.txt
+        run: cat entrega/version.txt
+

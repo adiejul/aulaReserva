@@ -1,56 +1,72 @@
-function getAulas(url, muestraAulas){
-    fetch(url)
-  .then(response => response.json())
-  .then(data => {
-    muestraAulas(data);
-    
-  });
+const API_URL = 'http://localhost:8000';
+
+function getAulas(url, muestraAulas) {
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      muestraAulas(data);
+
+    });
 
 }
 
-function muestraAulas(aulas){
-    document.getElementById("listadoAulas").innerHTML = aulas
-    .map(aula =>`
+function muestraAulas(aulas) {
+  document.getElementById("listadoAulas").innerHTML = aulas
+    .map(aula => `
       <div class="recuadros"> 
       <h3>${aula.nombre}</h3>
       <p>Capacidad: ${aula.capacidad} personas </p>
       </div>`)
     .join("")
 
-    rellenaSelectAulas(aulas);
+  rellenaSelectAulas(aulas);
 }
 
-function rellenaSelectAulas(aulas){
+
+function rellenaSelectAulas(aulas) {
   const select = document.getElementById("aula");
 
   aulas.forEach(aula => {
     const opcion = document.createElement("option");
     opcion.value = aula.id;
     opcion.textContent = aula.nombre;
-    select.appendChild(opcion);  
+    select.appendChild(opcion);
   });
 }
 
 function enviarReserva(evento) {
-    evento.preventDefault();
+  evento.preventDefault();
 
-    const aula = document.getElementById("aula").value;
-    const fecha = document.getElementById("fecha").value;
-    const hora = document.getElementById("hora").value;
-    const responsable = document.getElementById("responsable").value.trim();
-    const mensaje = document.getElementById("mensajeFormulario");
+  const aula = document.getElementById("aula").value;
+  const fecha = document.getElementById("fecha").value;
+  const hora = document.getElementById("hora").value;
+  const responsable = document.getElementById("responsable").value.trim();
+  const mensaje = document.getElementById("mensajeFormulario");
 
-    if (aula === "" || fecha === "" || hora === "" || responsable === "") {
-        mensaje.textContent = "Todos los campos son obligatorios.";
-        return;
-    }
+  if (aula === "" || fecha === "" || hora === "" || responsable === "") {
+    mensaje.textContent = "Todos los campos son obligatorios.";
+    return;
+  }
 
-    mensaje.textContent = "Reserva solicitada correctamente.";
+  const reserva = { aula, fecha, hora, responsable };
+
+  fetch('/reservas.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(reserva)
+  })
+    .then(response => response.json())
+    .then(data => {
+      mensaje.textContent = data.mensaje || data.error;
+      if (data.mensaje) {
+        document.getElementById("formReserva").reset();
+      }
+    });
 }
 
 document.getElementById("formReserva").addEventListener("submit", enviarReserva);
 
 
-(function(){
-    getAulas('/backend/public/index.php', muestraAulas);
+(function () {
+  getAulas('API_URL' + '/index.php', muestraAulas);
 })()

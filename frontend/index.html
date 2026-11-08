@@ -1,66 +1,78 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>aulaReserva - Reserva un aula</title>
-    <style>
-        #listadoAulas {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .recuadros {
-            border: 1px solid black;
-            border-radius: 8px;
-            padding: 1rem;
-            width: 220px;
-        }
-    </style>
+    <title>AulaReserva</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
-
 <body>
 
-    <h1>AulaReserva</h1>
-    <section>
+    <header class="cabecera">
+        <h1>AulaReserva</h1>
+        <p>Consulta aulas y gestiona sus reservas</p>
+    </header>
 
-        <h2>Aulas disponibles</h2>
-        <div id="listadoAulas"></div>
-    </section>
+    <main class="contenedor">
 
-    <hr>
+        <section class="panel" id="panelAulas">
+            <h2>Aulas disponibles</h2>
+            <div id="listadoAulas" class="tarjetas"></div>
+        </section>
 
-    <form id="formReserva">
+        <section class="panel" id="panelFormulario">
+            <h2>Solicitar reserva</h2>
 
-        <label for="aula">Aula</label>
-        <select name="aula" id="aula">
-            <option value="">Selecciona un aula</option>
-        </select>
-        
-        <div>
-            <label for="fecha">Fecha</label>
-            <input type="date" name="fecha" id="fecha">
-        </div>
-        <div>
-            <label for="hora">Hora</label>
-            <input type="time" name="hora" id="hora">
-        </div>
-        <div>
-            <label for="responsable">Responsable de la reserva</label>
-            <input type="text" name="responsable" id="responsable">
-        </div>
-        <div>
-            <button type="submit">Reservar</button>
-        </div>
-        <p id="mensajeFormulario"></p>
+            <form id="formReserva" novalidate>
+                <div class="campo">
+                    <label for="aula">Aula</label>
+                    <select id="aula" name="aula">
+                        <option value="">Selecciona un aula</option>
+                    </select>
+                </div>
 
-    </form>
+                <div class="campo">
+                    <label for="fecha">Fecha</label>
+                    <input type="date" id="fecha" name="fecha">
+                </div>
 
-    <script src="app.js"></script>
+                <div class="campo">
+                    <label for="hora">Hora</label>
+                    <input type="time" id="hora" name="hora">
+                </div>
 
+                <div class="campo">
+                    <label for="responsable">Responsable</label>
+                    <input type="text" id="responsable" name="responsable">
+                </div>
+
+                <button type="submit" class="boton">Reservar</button>
+                <p id="mensajeFormulario" class="mensaje" role="status"></p>
+            </form>
+        </section>
+
+        <section class="panel" id="panelReservas">
+            <h2>Reservas <span id="contadorReservas" class="contador">0</span></h2>
+
+            <div class="tabla-contenedor">
+                <table id="tablaReservas">
+                    <thead>
+                        <tr>
+                            <th>Aula</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Responsable</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoReservas"></tbody>
+                </table>
+            </div>
+            <p id="sinReservas" class="mensaje">No hay reservas todavía.</p>
+        </section>
+
+    </main>
+
+    <script src="/app.js" defer></script>
 </body>
-
 </html>

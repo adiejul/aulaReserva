@@ -1,3 +1,2 @@
 .env
-.sqlite
 data/*.sqlite

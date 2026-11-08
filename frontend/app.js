@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8000';
+const API_URL = '';
 
 function getAulas(url, muestraAulas) {
   fetch(url)
@@ -48,9 +48,9 @@ function enviarReserva(evento) {
     return;
   }
 
-  const reserva = { aula, fecha, hora, responsable };
+  const reserva = { aula_id: aula, fecha, hora, responsable };
 
-  fetch( API_URL + '/reservas.php', {
+  fetch( API_URL + '/api/reservas', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(reserva)
@@ -68,5 +68,5 @@ document.getElementById("formReserva").addEventListener("submit", enviarReserva)
 
 
 (function () {
-  getAulas(API_URL + '/index.php', muestraAulas);
+  getAulas(API_URL + '/api/aulas', muestraAulas);
 })()

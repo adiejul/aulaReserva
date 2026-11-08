@@ -55,13 +55,3 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Frontend y backend correctos"
-
-
-
-
-
-
-
-
-      - name: Mostrar total de rutas verificadas
-        run: echo "Rutas verificadas ${{ steps.validacion.outputs.total }}"

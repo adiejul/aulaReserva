@@ -1,6 +1,9 @@
 name: 07 - Comprobar AulaReserva
 
 on:
+  push:
+    branches:
+      - release/1.0
   workflow_dispatch:
 
 permissions:

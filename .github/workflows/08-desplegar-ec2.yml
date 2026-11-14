@@ -1,7 +1,5 @@
 name: 08 - Desplegar AulaReserva en EC2 
 
-name: Desplegar AulaReserva en EC2
-
 on:
   workflow_dispatch:
 

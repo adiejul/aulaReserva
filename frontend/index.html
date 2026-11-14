@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AulaReserva</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="cabecera">
+        <h1>AulaReserva</h1>
+        <p>Consulta aulas y gestiona sus reservas</p>
+        <span id="entorno-app"></span>
+    </header>
+
+    <main class="contenedor">
+
+        <section class="panel" id="panelAulas">
+            <h2>Aulas disponibles</h2>
+            <div id="listadoAulas" class="tarjetas"></div>
+        </section>
+
+        <section class="panel" id="panelFormulario">
+            <h2>Solicitar reserva</h2>
+
+            <form id="formReserva" novalidate>
+                <div class="campo">
+                    <label for="aula">Aula</label>
+                    <select id="aula" name="aula">
+                        <option value="">Selecciona un aula</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="fecha">Fecha</label>
+                    <input type="date" id="fecha" name="fecha">
+                </div>
+
+                <div class="campo">
+                    <label for="hora">Hora</label>
+                    <input type="time" id="hora" name="hora">
+                </div>
+
+                <div class="campo">
+                    <label for="responsable">Responsable</label>
+                    <input type="text" id="responsable" name="responsable">
+                </div>
+
+                <button type="submit" class="boton">Reservar</button>
+                <p id="mensajeFormulario" class="mensaje" role="status"></p>
+            </form>
+        </section>
+
+        <section class="panel" id="panelReservas">
+            <h2>Reservas <span id="contadorReservas" class="contador">0</span></h2>
+
+            <div class="tabla-contenedor">
+                <table id="tablaReservas">
+                    <thead>
+                        <tr>
+                            <th>Aula</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Responsable</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoReservas"></tbody>
+                </table>
+            </div>
+            <p id="sinReservas" class="mensaje">No hay reservas todavía.</p>
+        </section>
+
+    </main>
+
+    <script src="/config.js"></script>
+    <script src="/app.js" defer></script>
+</body>
+</html>

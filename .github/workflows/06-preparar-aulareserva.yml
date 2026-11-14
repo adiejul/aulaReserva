@@ -1,0 +1,62 @@
+name: 06 - Preparar AulaReserva
+
+on:
+  push:
+    branches:
+      - develop
+      - 'feature/**'
+  pull_request:
+    branches:
+      - develop
+  workflow_dispatch:
+  
+
+permissions:
+  contents: read
+
+jobs:
+  preparar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Leer las variables del repositorio
+        env:
+          APP_NAME: ${{ vars.APP_NAME }}
+          APP_ENV: ${{ vars.APP_ENV }}
+        run: |
+          echo "APP_NAME = $APP_NAME"
+          echo "APP_ENV = $APP_ENV"
+          if [ -z "$APP_NAME" ] || [ -z "$APP_ENV" ]; then
+            echo "::error::Faltan las variables APP_NAME y APP_ENV (Settings > Secrets and variables > Actions > Variables)"
+            exit 1
+          fi
+
+      - name: Generar frontend/config.js
+        env:
+          APP_NAME: ${{ vars.APP_NAME }}
+          APP_ENV: ${{ vars.APP_ENV }}
+        run: |
+          echo "window.APP_CONFIG = { nombre: \"$APP_NAME\", entorno: \"$APP_ENV\" };" > frontend/config.js
+          echo "Contenido de config.js:"
+          cat frontend/config.js
+
+      - name: Preparar dist
+        run: |
+          mkdir -p dist
+          cp -r frontend backend database dist/
+
+      - name: Comprobar que no hay bases de datos SQLite
+        run: |
+          if find dist -name "*.sqlite" | grep -q .; then
+            echo "::error::dist contiene un archivo SQLite"
+            exit 1
+          fi
+          echo "dist no contiene archivos SQLite"
+
+      - name: Subir la entrega
+        uses: actions/upload-artifact@v4
+        with:
+          name: AulaReserva-${{ vars.APP_ENV }}-${{ github.run_number }}
+          path: dist/
+          if-no-files-found: error

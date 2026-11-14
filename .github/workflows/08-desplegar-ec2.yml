@@ -6,7 +6,7 @@ on:
 jobs:
   desplegar:
     runs-on: ubuntu-latest
-    environment: Produccion
+    environment: production
 
     steps:
 
@@ -19,7 +19,7 @@ jobs:
         env:
           APP_ENV: ${{ vars.APP_ENV }}
         run: |
-          test "$APP_ENV" = "produccion"
+          test "$APP_ENV" = "development"
           sed -i "s/development/$APP_ENV/g" frontend/config.js
           cat frontend/config.js
 

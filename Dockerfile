@@ -14,7 +14,7 @@ RUN sed -i 's!/var/www/html!/var/www/backend/public!g' /etc/apache2/sites-availa
 
 # Configurar las rutas de la aplicacion
 RUN printf '%s\n' \
-    '<directory var="" www="" backend="" public="">' \
+    '<directory /var/www/backend/public>' \
     'Require all granted' \
     'DirectoryIndex router.php' \
     'FallbackResource /router.php' \
